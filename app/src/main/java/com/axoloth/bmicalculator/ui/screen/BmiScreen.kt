@@ -54,6 +54,7 @@ fun BmiCallculator(modifier: Modifier = Modifier) {
             value = weight,
             onValueChange = { weight = it },
             label = { Text("Berat (kg)") },
+            modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
