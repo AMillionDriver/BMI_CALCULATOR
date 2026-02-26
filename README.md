@@ -20,7 +20,7 @@ Aplikasi ini menerapkan pemisahan kode agar lebih mudah dikelola:
 - `ui.theme`: Pengaturan warna, tipografi, dan tema aplikasi.
 
 ## 📸 Tampilan Aplikasi
-(Saran: Masukkan screenshot aplikasi kamu di sini nanti)
+(Belum Ada)
 
 ## 🚀 Cara Menjalankan
 1. Clone repository ini.
