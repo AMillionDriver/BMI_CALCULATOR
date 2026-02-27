@@ -37,7 +37,11 @@ fun BmiCallculator(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                Text("BMI App Menu", modifier = Modifier.padding(16.dp), style = MaterialTheme.typography.titleLarge)
+                Text(
+                    text = "BMI App Menu",
+                    modifier = Modifier.padding(16.dp),
+                    style = MaterialTheme.typography.titleLarge
+                )
                 HorizontalDivider()
                 
                 Box(modifier = Modifier.padding(16.dp)) {
