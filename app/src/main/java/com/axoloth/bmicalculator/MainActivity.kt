@@ -7,30 +7,36 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.axoloth.bmicalculator.ui.theme.BMICALCULATORTheme
 import com.axoloth.bmicalculator.ui.screen.BmiCallculator
+import com.axoloth.bmicalculator.ui.screen.LoginUi
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            BMICALCULATORTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BmiCallculator(modifier = Modifier.padding(innerPadding))
+            var isLoggedIn by remember { mutableStateOf(false) }
+            var isDarkMode by remember { mutableStateOf(false) }
+            
+            BMICALCULATORTheme(darkTheme = isDarkMode) {
+                if (!isLoggedIn) {
+                    LoginUi(onLoginSuccess = { isLoggedIn = true })
+                } else {
+                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                        BmiCallculator(
+                            modifier = Modifier.padding(innerPadding),
+                            isDarkMode = isDarkMode,
+                            onDarkModeChange = { isDarkMode = it }
+                        )
+                    }
                 }
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    BMICALCULATORTheme {
-        BmiCallculator()
     }
 }
