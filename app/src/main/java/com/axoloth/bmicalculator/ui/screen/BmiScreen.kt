@@ -13,6 +13,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -21,14 +22,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.axoloth.bmicalculator.logic.getCategories
+import com.axoloth.bmicalculator.logic.calculateBmi
+import com.axoloth.bmicalculator.logic.getBmiCategory
 import com.axoloth.bmicalculator.ui.theme.BMICALCULATORTheme
 
 @Composable
 fun BmiCallculator(modifier: Modifier = Modifier) {
     var height by remember { mutableStateOf("") }
     var weight by remember { mutableStateOf("") }
-    var bmiResult by remember { mutableStateOf(0.0) }
+    var waist by remember { mutableStateOf("") }
+    var bmiResult by remember { mutableDoubleStateOf(0.0) }
 
     Column(
         modifier = modifier
@@ -43,7 +46,7 @@ fun BmiCallculator(modifier: Modifier = Modifier) {
         OutlinedTextField(
             value = height,
             onValueChange = { height = it },
-            label = { Text("Tinggi (m)") },
+            label = { Text("Tinggi (cm)") },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
@@ -60,11 +63,22 @@ fun BmiCallculator(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        OutlinedTextField(
+            value = waist,
+            onValueChange = { waist = it },
+            label = {Text(text ="Lingkar Pinggang")},
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         Button(onClick = {
             val h = height.toDoubleOrNull() ?: 0.0
             val w = weight.toDoubleOrNull() ?: 0.0
             if (h > 0) {
-                bmiResult = w / (h * h)
+                // Fixed: Use calculateBmi helper which correctly handles cm to meters conversion
+                bmiResult = calculateBmi(w, h)
             }
         }) {
             Text("Hitung BMI")
@@ -73,7 +87,10 @@ fun BmiCallculator(modifier: Modifier = Modifier) {
         if (bmiResult > 0) {
             Spacer(modifier = Modifier.height(16.dp))
             Text(text = "Hasil : ${"%.2f".format(bmiResult)}")
-            Text(text = getCategories(bmiResult))
+            Text(
+                text = "Kategori: ${getBmiCategory(bmiResult).label}",
+                style = MaterialTheme.typography.bodyLarge
+            )
         }
     }
 }
