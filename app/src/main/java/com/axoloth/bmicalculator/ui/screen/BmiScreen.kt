@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -39,7 +40,6 @@ fun BmiCallculator(
                 Text("BMI App Menu", modifier = Modifier.padding(16.dp), style = MaterialTheme.typography.titleLarge)
                 HorizontalDivider()
                 
-                // Item Menu: Dark Mode Toggle di dalam Drawer
                 Box(modifier = Modifier.padding(16.dp)) {
                     BmiDarkModeToggle(
                         isDarkMode = isDarkMode,
@@ -53,7 +53,7 @@ fun BmiCallculator(
                     onClick = { scope.launch { drawerState.close() } }
                 )
                 NavigationDrawerItem(
-                    label = {Text("Login") },
+                    label = { Text("Login") },
                     selected = false,
                     onClick = { /* Handle login */ }
                 )
@@ -70,6 +70,11 @@ fun BmiCallculator(
                         }
                     }
                 )
+            },
+            floatingActionButton = {
+                ExportFAB {
+                    // Logika export
+                }
             }
         ) { innerPadding ->
             Column(
@@ -149,6 +154,20 @@ fun BmiCallculator(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun ExportFAB(onClick: () -> Unit) {
+    FloatingActionButton(
+        onClick = onClick,
+        containerColor = MaterialTheme.colorScheme.primary,
+        contentColor = MaterialTheme.colorScheme.onPrimary
+    ) {
+        Icon(
+            imageVector = Icons.Default.Share,
+            contentDescription = "Export Data"
+        )
     }
 }
 
