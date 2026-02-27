@@ -6,9 +6,9 @@ Aplikasi modern untuk menghitung *Body Mass Index* (BMI) dengan akurasi tinggi. 
 
 ## 📸 Tampilan Aplikasi
 
-| Light Mode | Dark Mode | Input Data | Hasil Perhitungan |
+| Light Mode | Dark Mode | Input Data | Tampilan logo |
 |:---:|:---:|:---:|:---:|
-| <img src="https://github.com/user-attachments/assets/82b4d78d-83b1-41cd-a21d-7ec3ac3b7d6e" width="200"> | <img src="https://github.com/user-attachments/assets/91d874e8-c12b-48f5-986b-9625920f195d" width="200"> | <img src="https://github.com/user-attachments/assets/5d031b41-0775-4c8d-a03b-e36dcd6bfea7" width="200"> | <img src="https://github.com/user-attachments/assets/d2c4b0ad-0573-408e-bffc-4f8dd3c642e9" width="200"> |
+| <img src="https://github.com/user-attachments/assets/5d031b41-0775-4c8d-a03b-e36dcd6bfea7" width="200"> | <img src="https://github.com/user-attachments/assets/82b4d78d-83b1-41cd-a21d-7ec3ac3b7d6e" width="200"> | <img src="https://github.com/user-attachments/assets/91d874e8-c12b-48f5-986b-9625920f195d" width="200"> | <img src="https://github.com/user-attachments/assets/d2c4b0ad-0573-408e-bffc-4f8dd3c642e9" width="200"> |
 
 ---
 
