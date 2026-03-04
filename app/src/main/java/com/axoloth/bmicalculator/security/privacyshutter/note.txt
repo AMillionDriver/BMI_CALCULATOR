@@ -1,0 +1,3 @@
+Bagian privacy shutter ini adalah bagian logic dimana saat user mengambil screenshoot selama didalam
+aplikasi nantinya screenshoot hanya akan menangkap warna hitam (black screen) guna untuk privacy user
+karena aplikasi nantinya akan meminta data yang cukup sensitif untuk beberapa kalangan (lingkar pinggang)
