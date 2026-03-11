@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -35,7 +36,9 @@ fun BmiCallculator(
     isDarkMode: Boolean = false,
     onDarkModeChange: (Boolean) -> Unit = {},
     onNavigateToShare: () -> Unit = {},
-    onNavigateToHistory: () -> Unit = {}
+    onNavigateToHistory: () -> Unit = {},
+    onNavigateToProfile: () -> Unit = {},
+    isLoggedIn: Boolean = false
 ) {
     var height by remember { mutableStateOf("") }
     var weight by remember { mutableStateOf("") }
@@ -68,10 +71,20 @@ fun BmiCallculator(
                     selected = false,
                     onClick = { scope.launch { drawerState.close() } }
                 )
+                
                 NavigationDrawerItem(
-                    label = { Text("Login") },
+                    label = { Text(if (isLoggedIn) "Logout" else "Login") },
                     selected = false,
-                    onClick = { /* Handle login */ }
+                    icon = { 
+                        Icon(
+                            imageVector = if (isLoggedIn) Icons.AutoMirrored.Filled.Logout else Icons.Default.Login, 
+                            contentDescription = null
+                        ) 
+                    },
+                    onClick = { 
+                        scope.launch { drawerState.close() }
+                        onNavigateToProfile()
+                    }
                 )
             }
         }
@@ -88,7 +101,10 @@ fun BmiCallculator(
                 )
             },
             bottomBar = {
-                BmiBottomNavigationBar(onHistoryClick = onNavigateToHistory)
+                BmiBottomNavigationBar(
+                    onHistoryClick = onNavigateToHistory,
+                    onAccountClick = onNavigateToProfile
+                )
             },
             floatingActionButton = {
                 ExportFAB(onClick = onNavigateToShare)
@@ -197,7 +213,10 @@ fun BmiCallculator(
 }
 
 @Composable
-fun BmiBottomNavigationBar(onHistoryClick: () -> Unit = {}) {
+fun BmiBottomNavigationBar(
+    onHistoryClick: () -> Unit = {},
+    onAccountClick: () -> Unit = {}
+) {
     var selectedItem by remember { mutableIntStateOf(0) }
 
     Box(
@@ -239,7 +258,10 @@ fun BmiBottomNavigationBar(onHistoryClick: () -> Unit = {}) {
                     label = "ACCOUNT",
                     isSelected = selectedItem == 2,
                     isSpecial = true,
-                    onClick = { selectedItem = 2 }
+                    onClick = { 
+                        selectedItem = 2 
+                        onAccountClick()
+                    }
                 )
                 BottomNavItem(
                     icon = Icons.Default.FitnessCenter,

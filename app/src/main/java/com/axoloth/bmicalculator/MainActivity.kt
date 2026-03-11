@@ -22,13 +22,16 @@ import com.axoloth.bmicalculator.ui.screen.BmiCallculator
 import com.axoloth.bmicalculator.ui.screen.LoginUi
 import com.axoloth.bmicalculator.ui.screen.ShareScreen
 import com.axoloth.bmicalculator.ui.screen.HistoryScreen
+import com.axoloth.bmicalculator.ui.screen.ProfileScreen
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            var isLoggedIn by remember { mutableStateOf(false) }
+            val auth = FirebaseAuth.getInstance()
+            var isLoggedIn by remember { mutableStateOf(auth.currentUser != null) }
             var isDarkMode by remember { mutableStateOf(false) }
             val navController = rememberNavController()
             
@@ -44,7 +47,9 @@ class MainActivity : ComponentActivity() {
                                     isDarkMode = isDarkMode,
                                     onDarkModeChange = { isDarkMode = it },
                                     onNavigateToShare = { navController.navigate("share_screen") },
-                                    onNavigateToHistory = { navController.navigate("history_screen") }
+                                    onNavigateToHistory = { navController.navigate("history_screen") },
+                                    onNavigateToProfile = { navController.navigate("profile_screen") },
+                                    isLoggedIn = isLoggedIn
                                 )
                             }
                         }
@@ -54,13 +59,23 @@ class MainActivity : ComponentActivity() {
                         composable("history_screen") {
                             HistoryScreen(onBackClick = { navController.popBackStack() })
                         }
+                        composable("profile_screen") {
+                            ProfileScreen(
+                                onBackClick = { navController.popBackStack() },
+                                onLogoutClick = { 
+                                    isLoggedIn = false
+                                    navController.navigate("bmi_calculator") {
+                                        popUpTo(0)
+                                    }
+                                }
+                            )
+                        }
                     }
                 }
             }
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
